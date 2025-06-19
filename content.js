@@ -1,11 +1,11 @@
 // check if the current site is blocked
-chrome.storage.local.get(["blockedSites"], (result) => {
+chrome.storage.local.get(["blockedSites", "blockingEnabled"], (result) => {
   const hostname = window.location.hostname;
   const blocked = result.blockedSites || [];
+  const enabled = result.blockingEnabled ?? true;
 
   const isBlocked = blocked.some((domain) => hostname.includes(domain));
-
-  if (isBlocked) {
+  if (enabled && isBlocked) {
     blockPage(hostname);
   }
 });

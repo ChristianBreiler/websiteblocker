@@ -1,4 +1,15 @@
 let blocked = [];
+const checkbox = document.getElementById("check");
+
+// load initial state from chrome storage
+chrome.storage.local.get(["blockingEnabled"], (result) => {
+  checkbox.checked = result.blockingEnabled ?? true; // default to true
+});
+
+// Save state when checkbox is toggled
+checkbox.addEventListener("change", () => {
+  chrome.storage.local.set({ blockingEnabled: checkbox.checked });
+});
 
 // load up all blocked sites from chrome storage into the blocked list
 document.addEventListener("DOMContentLoaded", () => {
